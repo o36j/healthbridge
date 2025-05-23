@@ -8,23 +8,30 @@ HealthBridge is a modern hospital appointment management system built with the M
 - Register/Login with Email & Password (JWT + HTTP-only cookie)
 - Role-based access control (Patient, Doctor, Nurse, Admin)
 - Protected routes based on user roles
+- Secure session management with refresh tokens
 
 ### User Profiles
 - Upload profile photos
 - Detailed user information based on role
 - Admin can manage all user data
+- Profile customization options
 
 ### Appointments
 - Patients can search doctors by department and availability
 - Book, reschedule, and cancel appointments
 - Doctors and nurses can view, accept, reject, and manage appointments
 - Admins can oversee all appointments and assign staff
+- Calendar integration for scheduling
+- Automated conflict detection
 
 ### Patient History (EHR)
 - Electronic Health Records for patients
 - Medical staff can add/edit patient records
 - Includes diagnoses, vitals, notes, prescriptions, and attachments
 - Patients can view their own medical history
+- PDF generation for medical reports and prescriptions
+- Secure file handling and document management
+- Export medical records in various formats
 
 ### Dashboard
 - Role-specific dashboards
@@ -32,14 +39,35 @@ HealthBridge is a modern hospital appointment management system built with the M
 - Appointment tracking
 - Patient history access based on role
 - System settings and configurations
+- Analytics and reporting features
+- Real-time statistics and metrics
 
 ### Messaging & Notifications
 - Internal messaging system between users
 - Automated notifications for appointment updates
 - Email notifications for important events
+- Real-time chat functionality
+- Message history and archiving
 
-### Chatbot
+### Document Management
+- Generate and download medical reports as PDF
+- Secure file storage and retrieval
+- Support for multiple file formats
+- Document version control
+- Automated report generation
+
+### Chatbot & Support
 - AI-powered chatbot for basic inquiries and assistance
+- 24/7 automated support
+- FAQ integration
+- Smart appointment recommendations
+
+### Security Features
+- End-to-end encryption for sensitive data
+- HIPAA compliance measures
+- Regular security audits
+- Two-factor authentication support
+- Session management and monitoring
 
 ## Tech Stack
 
@@ -72,97 +100,100 @@ HealthBridge is a modern hospital appointment management system built with the M
 ```
 ├── client/                          # Frontend React application
 │   ├── public/                      # Static files and assets
-│   ├── src/                         # Source files
-│   │   ├── assets/                  # Images, icons, and other static assets
-│   │   ├── components/              # Reusable UI components
-│   │   │   ├── admin/               # Admin-specific components
-│   │   │   ├── appointments/        # Appointment management components
-│   │   │   ├── common/              # Shared components used across the app
-│   │   │   ├── doctors/             # Doctor-specific components
-│   │   │   ├── layouts/             # Layout components (headers, footers, etc.)
-│   │   │   ├── profile/             # User profile components
-│   │   │   ├── ui/                  # Basic UI components (buttons, cards, etc.)
-│   │   │   └── PrivateRoute.tsx     # Route wrapper for authentication
-│   │   ├── contexts/                # React context providers
-│   │   │   ├── AuthContext.tsx      # Authentication state management
-│   │   │   └── NotificationContext.tsx # Notifications state management
-│   │   ├── pages/                   # Page components
-│   │   │   ├── Landing.tsx          # Homepage/landing page
-│   │   │   ├── Login.tsx            # User login page
-│   │   │   ├── Register.tsx         # User registration page
-│   │   │   ├── Profile.tsx          # User profile page
-│   │   │   ├── Appointments.tsx     # Appointment management page
-│   │   │   ├── Doctors.tsx          # Doctors listing page
-│   │   │   ├── DoctorDetail.tsx     # Doctor detail page
-│   │   │   ├── PatientHistory.tsx   # Patient medical history page
-│   │   │   ├── Messages.tsx         # Messaging system page
-│   │   │   ├── Notifications.tsx    # Notifications page
-│   │   │   ├── Settings.tsx         # User settings page
-│   │   │   └── Admin/*.tsx          # Admin-specific pages
-│   │   ├── styles/                  # CSS and styling files
-│   │   │   └── index.css            # Global CSS styles
-│   │   ├── utils/                   # Utility functions
-│   │   │   ├── api.ts               # API request functions
-│   │   │   ├── auth.ts              # Authentication utility functions
-│   │   │   ├── date.ts              # Date formatting utilities
-│   │   │   └── validation.ts        # Form validation utilities
-│   │   ├── App.tsx                  # Main application component with routes
-│   │   ├── App.css                  # App-specific styles
-│   │   └── main.tsx                 # Application entry point
-│   ├── index.html                   # HTML template
-│   ├── vite.config.ts               # Vite configuration
-│   ├── tsconfig.json                # TypeScript configuration
-│   └── package.json                 # Frontend dependencies
-│
-├── server/                          # Backend Node.js application
-│   ├── src/                         # Source files
-│   │   ├── config/                  # Configuration files
-│   │   │   ├── database.ts          # MongoDB connection setup
-│   │   │   ├── email.ts             # Email service configuration
-│   │   │   └── cloudinary.ts        # Cloudinary image storage config
-│   │   ├── controllers/             # Route controllers
-│   │   │   ├── auth.controller.ts   # Authentication controllers
-│   │   │   ├── user.controller.ts   # User management controllers
-│   │   │   ├── appointment.controller.ts # Appointment controllers
-│   │   │   ├── patientHistory.controller.ts # Patient history controllers
-│   │   │   ├── message.controller.ts # Messaging controllers
-│   │   │   └── chatbot.controller.ts # Chatbot integration controllers
-│   │   ├── middlewares/             # Express middlewares
-│   │   │   ├── auth.middleware.ts   # Authentication middleware
-│   │   │   ├── upload.middleware.ts # File upload middleware
-│   │   │   ├── validation.middleware.ts # Data validation middleware
-│   │   │   └── errorHandler.middleware.ts # Error handling middleware
-│   │   ├── models/                  # Mongoose data models
-│   │   │   ├── user.model.ts        # User data model
-│   │   │   ├── appointment.model.ts # Appointment data model
-│   │   │   ├── patientHistory.model.ts # Patient history data model
-│   │   │   ├── message.model.ts     # Message data model
-│   │   │   ├── notification.model.ts # Notification data model
-│   │   │   ├── userPreferences.model.ts # User preferences model
-│   │   │   └── auditLog.model.ts    # Audit logging model
-│   │   ├── routes/                  # API routes
-│   │   │   ├── auth.routes.ts       # Authentication routes
-│   │   │   ├── user.routes.ts       # User management routes
-│   │   │   ├── appointment.routes.ts # Appointment routes
-│   │   │   ├── patientHistory.routes.ts # Patient history routes
-│   │   │   ├── message.routes.ts    # Messaging routes
-│   │   │   ├── notification.routes.ts # Notification routes
-│   │   │   ├── admin.routes.ts      # Admin-specific routes
-│   │   │   └── chatbot.routes.ts    # Chatbot integration routes
-│   │   ├── types/                   # TypeScript type definitions
-│   │   │   ├── user.types.ts        # User-related type definitions
-│   │   │   ├── appointment.types.ts # Appointment-related type definitions
-│   │   │   └── request.types.ts     # Express request extensions
-│   │   ├── utils/                   # Utility functions
-│   │   │   ├── jwt.ts               # JWT token management utilities
-│   │   │   ├── email.ts             # Email sending utilities
-│   │   │   ├── logger.ts            # Logging utilities
-│   │   │   └── validation.ts        # Data validation utilities
-│   │   ├── validations/             # Data validation schemas
-│   │   │   ├── user.validation.ts   # User data validation schemas
-│   │   │   ├── appointment.validation.ts # Appointment validation schemas
-│   │   │   └── patientHistory.validation.ts # Patient history validation
-│   │   └── index.ts                 # Server entry point
+│   │   ├── src/                         # Source files
+│   │   │   ├── assets/                  # Images, icons, and other static assets
+│   │   │   ├── components/              # Reusable UI components
+│   │   │   │   ├── admin/               # Admin-specific components
+│   │   │   │   ├── appointments/        # Appointment management components
+│   │   │   │   ├── common/              # Shared components used across the app
+│   │   │   │   ├── doctors/             # Doctor-specific components
+│   │   │   │   ├── layouts/             # Layout components (headers, footers, etc.)
+│   │   │   │   ├── profile/             # User profile components
+│   │   │   │   ├── ui/                  # Basic UI components (buttons, cards, etc.)
+│   │   │   │   └── PrivateRoute.tsx     # Route wrapper for authentication
+│   │   │   │   ├── contexts/                # React context providers
+│   │   │   │   │   ├── AuthContext.tsx      # Authentication state management
+│   │   │   │   │   └── NotificationContext.tsx # Notifications state management
+│   │   │   │   ├── pages/                   # Page components
+│   │   │   │   │   ├── Landing.tsx          # Homepage/landing page
+│   │   │   │   │   ├── Login.tsx            # User login page
+│   │   │   │   │   ├── Register.tsx         # User registration page
+│   │   │   │   │   ├── Profile.tsx          # User profile page
+│   │   │   │   │   ├── Appointments.tsx     # Appointment management page
+│   │   │   │   │   ├── Doctors.tsx          # Doctors listing page
+│   │   │   │   │   ├── DoctorDetail.tsx     # Doctor detail page
+│   │   │   │   │   ├── PatientHistory.tsx   # Patient medical history page
+│   │   │   │   │   ├── Messages.tsx         # Messaging system page
+│   │   │   │   │   ├── Notifications.tsx    # Notifications page
+│   │   │   │   │   ├── Settings.tsx         # User settings page
+│   │   │   │   │   └── Admin/*.tsx          # Admin-specific pages
+│   │   │   │   ├── styles/                  # CSS and styling files
+│   │   │   │   │   └── index.css            # Global CSS styles
+│   │   │   │   ├── utils/                   # Utility functions
+│   │   │   │   │   ├── api.ts               # API request functions
+│   │   │   │   │   ├── auth.ts              # Authentication utility functions
+│   │   │   │   │   ├── date.ts              # Date formatting utilities
+│   │   │   │   │   └── validation.ts        # Form validation utilities
+│   │   │   │   ├── App.tsx                  # Main application component with routes
+│   │   │   │   ├── App.css                  # App-specific styles
+│   │   │   │   └── main.tsx                 # Application entry point
+│   │   │   ├── index.html                   # HTML template
+│   │   │   ├── vite.config.ts               # Vite configuration
+│   │   │   ├── tsconfig.json                # TypeScript configuration
+│   │   │   └── package.json                 # Frontend dependencies
+│   │   ├── index.html                   # HTML template
+│   │   ├── vite.config.ts               # Vite configuration
+│   │   ├── tsconfig.json                # TypeScript configuration
+│   │   └── package.json                 # Frontend dependencies
+│   ├── server/                          # Backend Node.js application
+│   │   ├── src/                         # Source files
+│   │   │   ├── config/                  # Configuration files
+│   │   │   │   ├── database.ts          # MongoDB connection setup
+│   │   │   │   ├── email.ts             # Email service configuration
+│   │   │   │   └── cloudinary.ts        # Cloudinary image storage config
+│   │   │   ├── controllers/             # Route controllers
+│   │   │   │   ├── auth.controller.ts   # Authentication controllers
+│   │   │   │   ├── user.controller.ts   # User management controllers
+│   │   │   │   ├── appointment.controller.ts # Appointment controllers
+│   │   │   │   ├── patientHistory.controller.ts # Patient history controllers
+│   │   │   │   ├── message.controller.ts # Messaging controllers
+│   │   │   │   └── chatbot.controller.ts # Chatbot integration controllers
+│   │   │   ├── middlewares/             # Express middlewares
+│   │   │   │   ├── auth.middleware.ts   # Authentication middleware
+│   │   │   │   ├── upload.middleware.ts # File upload middleware
+│   │   │   │   ├── validation.middleware.ts # Data validation middleware
+│   │   │   │   └── errorHandler.middleware.ts # Error handling middleware
+│   │   │   ├── models/                  # Mongoose data models
+│   │   │   │   ├── user.model.ts        # User data model
+│   │   │   │   ├── appointment.model.ts # Appointment data model
+│   │   │   │   ├── patientHistory.model.ts # Patient history data model
+│   │   │   │   ├── message.model.ts     # Message data model
+│   │   │   │   ├── notification.model.ts # Notification data model
+│   │   │   │   ├── userPreferences.model.ts # User preferences model
+│   │   │   │   └── auditLog.model.ts    # Audit logging model
+│   │   │   ├── routes/                  # API routes
+│   │   │   │   ├── auth.routes.ts       # Authentication routes
+│   │   │   │   ├── user.routes.ts       # User management routes
+│   │   │   │   ├── appointment.routes.ts # Appointment routes
+│   │   │   │   ├── patientHistory.routes.ts # Patient history routes
+│   │   │   │   ├── message.routes.ts    # Messaging routes
+│   │   │   │   ├── notification.routes.ts # Notification routes
+│   │   │   │   ├── admin.routes.ts      # Admin-specific routes
+│   │   │   │   └── chatbot.routes.ts    # Chatbot integration routes
+│   │   │   ├── types/                   # TypeScript type definitions
+│   │   │   │   ├── user.types.ts        # User-related type definitions
+│   │   │   │   ├── appointment.types.ts # Appointment-related type definitions
+│   │   │   │   └── request.types.ts     # Express request extensions
+│   │   │   ├── utils/                   # Utility functions
+│   │   │   │   ├── jwt.ts               # JWT token management utilities
+│   │   │   │   ├── email.ts             # Email sending utilities
+│   │   │   │   ├── logger.ts            # Logging utilities
+│   │   │   │   └── validation.ts        # Data validation utilities
+│   │   │   ├── validations/             # Data validation schemas
+│   │   │   │   ├── user.validation.ts   # User data validation schemas
+│   │   │   │   ├── appointment.validation.ts # Appointment validation schemas
+│   │   │   │   └── patientHistory.validation.ts # Patient history validation
+│   │   │   └── index.ts                 # Server entry point
 │   ├── uploads/                     # Uploaded files storage
 │   │   ├── profiles/                # User profile photos
 │   │   └── medical/                 # Medical record attachments
